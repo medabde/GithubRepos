@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.med.githubrepos.R;
 import com.med.githubrepos.adapter.CustomAdapter;
 import com.med.githubrepos.model.Repo;
+import com.med.githubrepos.model.ReposResponse;
 import com.med.githubrepos.network.GetDataService;
 import com.med.githubrepos.network.RetrofitClientInstance;
 
@@ -31,34 +32,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressDoalog = new ProgressDialog(MainActivity.this);
-        progressDoalog.setMessage("Loading....");
+        progressDoalog.setMessage(getString(R.string.loading_message));
         progressDoalog.show();
 
         /*Create handle for the RetrofitInstance interface*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
-        Call<List<Repo>> call = service.getRepos();
-        call.enqueue(new Callback<List<Repo>>() {
+        Call<ReposResponse> call = service.getRepos();
+        call.enqueue(new Callback<ReposResponse>() {
 
             @Override
-            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+            public void onResponse(Call<ReposResponse> call, Response<ReposResponse> response) {
                 progressDoalog.dismiss();
                 generateDataList(response.body());
             }
 
 
             @Override
-            public void onFailure(Call<List<Repo>> call, Throwable t) {
+            public void onFailure(Call<ReposResponse> call, Throwable t) {
                 progressDoalog.dismiss();
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                System.out.println("error est : "+t.getMessage());
+                Toast.makeText(MainActivity.this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Repo> photoList) {
+    private void generateDataList(ReposResponse repoList) {
+        List<Repo> repos = repoList.getRepos();
         recyclerView = findViewById(R.id.customRecyclerView);
-        adapter = new CustomAdapter(this,photoList);
+        adapter = new CustomAdapter(this,repos);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

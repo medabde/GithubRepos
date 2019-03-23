@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.med.githubrepos.Utils;
+import com.med.githubrepos.model.ReposResponse;
+import com.squareup.picasso.Picasso;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.med.githubrepos.R;
 import com.med.githubrepos.model.Repo;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.List;
 
@@ -39,19 +42,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         customViewHolder.name.setText(dataList.get(i).getName());
         customViewHolder.username.setText(dataList.get(i).getOwner().getName());
         customViewHolder.description.setText(dataList.get(i).getDescription());
-        customViewHolder.numberStars.setText(dataList.get(i).getStars());
+        customViewHolder.numberStars.setText(Utils.getShortNumber(dataList.get(i).getStars()));
 
-        Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(i).getOwner().getAvatarURL())
-                .placeholder((R.drawable.avatar_holder))
-                .error(R.drawable.avatar_holder)
+        Picasso.get()
+                .load(dataList.get(i).getOwner().getAvatarURL())
+                .placeholder(R.drawable.avatar_holder)
                 .into(customViewHolder.userImage);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {

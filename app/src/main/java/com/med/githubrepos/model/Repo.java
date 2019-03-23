@@ -4,13 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Repo {
 
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("description")
     private String description;
 
     @SerializedName("stargazers_count")
     private int stars;
 
+    @SerializedName("owner")
     private User owner;
 
     public String getName() {
@@ -28,4 +31,5 @@ public class Repo {
     public User getOwner() {
         return owner;
     }
+
 }
