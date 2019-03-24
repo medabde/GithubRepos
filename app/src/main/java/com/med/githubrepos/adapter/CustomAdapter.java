@@ -17,16 +17,19 @@ import com.med.githubrepos.R;
 import com.med.githubrepos.model.Repo;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
     private List<Repo> dataList;
-    private Context context;
 
-    public CustomAdapter(Context context, List<Repo> dataList){
-        this.context = context;
-        this.dataList = dataList;
+    public CustomAdapter(List<Repo> dataList){
+        this.dataList = new ArrayList<>(dataList);
+    }
+
+    public void setDataList(List<Repo> dataList) {
+        this.dataList.addAll(dataList);
     }
 
     @NonNull
