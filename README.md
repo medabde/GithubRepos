@@ -3,13 +3,13 @@ My solution to the Hidden founders coding challenge [Hidden founders coding chal
 # Introduction :
 A small android app that lists the most starred Github repos that were created in the last 30 days.
 # Features :
- - list the most starred Github repos that were created in the last 30 days
+ - List the most starred Github repos that were created in the last 30 days
  - Each repo has the following details : 
    - Repository name
    - Repository description
    - Numbers of stars for the repo
    - Username and avatar of the owner
- - keep scrolling and new results appear (Endless scrolling)
+ - Keep scrolling and new results appear (Endless scrolling)
    
 # Libraries used :
  - Retrofit
