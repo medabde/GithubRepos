@@ -1,10 +1,11 @@
 package com.med.githubrepos.activity;
 
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.med.githubrepos.EndlessRecyclerViewScrollListener;
 import com.med.githubrepos.R;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CustomAdapter adapter;
     private RecyclerView recyclerView;
-    ProgressDialog progressDoalog;
+    private ProgressBar progressBar;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -31,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressDoalog = new ProgressDialog(MainActivity.this);
-        progressDoalog.setMessage(getString(R.string.loading_message));
-        progressDoalog.show();
+        progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
 
         layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView = findViewById(R.id.customRecyclerView);
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 page++;
                 generateData(page);
-                System.out.println("hey error :"+page);
             }
         });
 
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<ReposResponse> call, Response<ReposResponse> response) {
-                progressDoalog.dismiss();
+                progressBar.setVisibility(View.GONE);
 
                 /*update adapter*/
                 adapter.setDataList(response.body().getRepos());
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReposResponse> call, Throwable t) {
-                progressDoalog.dismiss();
-                System.out.println("error est : "+t.getMessage());
+                progressBar.setVisibility(View.GONE);
+
                 Toast.makeText(MainActivity.this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
             }
         });
