@@ -1,5 +1,5 @@
 # Most starred Github repos (Coding Challenge)
-My solution to the Hidden founders coding challenge [Hidden founders coding challenge](https://github.com/hiddenfounders/mobile-coding-challenge).
+My solution to the [Hidden founders coding challenge](https://github.com/hiddenfounders/mobile-coding-challenge).
 # Introduction :
 A small android app that lists the most starred Github repos that were created in the last 30 days.
 # Features :
